@@ -40,21 +40,7 @@ function visage.setOnAll(mons, fun)
 end
 
 function visage.detectMonitors()
-    local mons = {peripheral.find("monitor")}
-    if mons[1] == nil then
-        term.setTextColor(colors.yellow)
-        print("[VisageLib]: No monitors were found.")
-        term.setTextColor(colors.white)
-    else
-        local i = 1
-        repeat
-            mons[i].setBackgroundColor(colors.black)
-            mons[i].clear()
-            i = i+1
-        until mons[i] == nil
-    end
-
-    return mons
+    return table.pack(peripheral.find("monitor"))
 end
 
 function visage.displayIndexes (mons)
