@@ -25,13 +25,14 @@ function visage.displayIndex(mon, index)
     mon.write(txt)
 end
 
-function visage.runOnAll(mons, fun)
+function visage.runOnAll(mons, fun, ...)
+    local args = {...}
     local functions = {}
 
     for i, mon in ipairs(mons) do
         if not (mon == "moved") then
             table.insert(functions, function()
-                fun(mon, i)
+                fun(mon, i, table.unpack(args))
             end)
         end
     end
@@ -39,10 +40,12 @@ function visage.runOnAll(mons, fun)
     parallel.waitForAll(table.unpack(functions))
 end
 
-function visage.setOnAll(mons, fun)
+function visage.setOnAll(mons, fun, ...)
+    local args = {...}
+
     for i, mon in ipairs(mons) do
         if not (mon == "moved") then
-            fun(mon, i)
+            fun(mon, i, table.unpack(args))
         end
     end
 end
