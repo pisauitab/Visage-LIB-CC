@@ -25,7 +25,7 @@ function visage.displayIndex(mon, index)
     mon.write(txt)
 end
 
-function visage.setOnAll(mons, fun)
+function visage.runOnAll(mons, fun)
     local functions = {}
 
     for i, mon in ipairs(mons) do
@@ -39,12 +39,20 @@ function visage.setOnAll(mons, fun)
     parallel.waitForAll(table.unpack(functions))
 end
 
+function visage.setOnAll(mons, fun)
+    for i, mon in ipairs(mons) do
+        if not (mon == "moved") then
+            fun(mon, i)
+        end
+    end
+end
+
 function visage.detectMonitors()
     return table.pack(peripheral.find("monitor"))
 end
 
 function visage.displayIndexes (mons)
-    visage.setOnAll(mons,visage.displayIndex)
+    visage.runOnAll(mons,visage.displayIndex)
 end
 
 function visage.orderMonitors(mons, userOrder)
